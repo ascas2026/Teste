@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Consultar Estado</title>
+
+  <style>
+    :root{
+      --bg: #0b1220;
+      --card: #121a2b;
+      --muted: #9aa4b2;
+      --text: #e6eaf0;
+      --line: rgba(255,255,255,.08);
+      --shadow: 0 16px 40px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+
+    *{ box-sizing: border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1000px 600px at 10% 10%, rgba(90,130,255,.18), transparent 60%),
+                  radial-gradient(900px 600px at 90% 20%, rgba(124,255,199,.12), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 20px;
+    }
+
+    .wrap{
+      width: 100%;
+      max-width: 520px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .logo{
+      width: 44px; height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(90,130,255,.9), rgba(124,255,199,.85));
+      box-shadow: 0 8px 20px rgba(0,0,0,.25);
+    }
+    .brand h1{
+      font-size: 18px;
+      margin:0;
+      letter-spacing: .2px;
+    }
+    .brand p{
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .card{
+      background: rgba(18,26,43,.82);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      padding: 18px;
+      backdrop-filter: blur(10px);
+    }
+
+    .field{
+      margin-top: 10px;
+    }
+    label{
+      display:block;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .row{
+      display:flex;
+      gap: 10px;
+      align-items: stretch;
+      flex-wrap: wrap;
+    }
+    input{
+      flex: 1;
+      min-width: 220px;
+      padding: 14px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      outline: none;
+      font-size: 15px;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+    }
+    input:focus{
+      border-color: rgba(90,130,255,.55);
+      box-shadow: 0 0 0 3px rgba(90,130,255,.18);
+    }
+
+    button{
+      padding: 14px 16px;
+      border: 0;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(90,130,255,.95), rgba(124,255,199,.9));
+      color: #07101a;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 15px;
+      min-width: 140px;
+    }
+    button:disabled{
+      opacity: .6;
+      cursor:not-allowed;
+    }
+
+    .hint{
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .result{
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      display:none;
+    }
+
+    .alert{
+      display:flex;
+      align-items:flex-start;
+      gap: 10px;
+      color: #ffd3d3;
+    }
+    .ok{
+      color: #d6ffe8;
+    }
+
+    .grid{
+      margin-top: 10px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .item{
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.03);
+    }
+    .k{
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .v{
+      font-size: 16px;
+      font-weight: 700;
+      word-break: break-word;
+    }
+
+    .footer{
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align:center;
+    }
+
+    .pill{
+      display:inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div>
+        <h1>Consultar Estado</h1>
+        <p>Digite o seu código para ver o seu saldo/estado.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="field">
+        <label for="codigo">Código do cliente</label>
+        <div class="row">
+          <input id="codigo" inputmode="latin" autocomplete="one-time-code"
+                 placeholder="Ex.: MZ8K2P9A" maxlength="24" />
+          <button id="btn" onclick="consultar()">Consultar</button>
+        </div>
+        <div class="hint">
+          * Este acesso é restrito. Se não tiveres código, fala com a administração.
+          <div class="pill">Dica: podes adicionar esta página à tela inicial (vira “app”).</div>
+        </div>
+      </div>
+
+      <div id="result" class="result"></div>
+    </div>
+
+    <div class="footer">© Consulta de estado</div>
+  </div>
+
+  <script>
+    // 1) Cola aqui o link do teu Apps Script Web App (o que termina com /exec)
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwA7KJP7gQ0mkvRB_5bOtnaQkH_PlXxCVPsi4G1QPMfBEUM2K-srdVmhfmTWfASquMn/exec";
+
+    const elCode = document.getElementById("codigo");
+    const elBtn  = document.getElementById("btn");
+    const elRes  = document.getElementById("result");
+
+    // Enter para consultar
+    elCode.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") consultar();
+    });
+
+    function showLoading() {
+      elBtn.disabled = true;
+      elBtn.textContent = "A consultar…";
+      elRes.style.display = "block";
+      elRes.innerHTML = `<div class="hint">Aguarda um instante…</div>`;
+    }
+
+    function showError(msg) {
+      elBtn.disabled = false;
+      elBtn.textContent = "Consultar";
+      elRes.style.display = "block";
+      elRes.innerHTML = `
+        <div class="alert">
+          <div>⚠️</div>
+          <div>
+            <div style="font-weight:700;margin-bottom:4px;">Não foi possível consultar</div>
+            <div class="hint">${escapeHtml(msg)}</div>
+          </div>
+        </div>`;
+    }
+
+    function showData(data) {
+      elBtn.disabled = false;
+      elBtn.textContent = "Consultar";
+
+      const estado = data.estado ?? "-";
+      const saldo  = data.saldo ?? "-";
+      const prox   = data.proxima_data ?? "-";
+      const nome   = data.nome ?? "";
+
+      elRes.style.display = "block";
+      elRes.innerHTML = `
+        <div class="ok" style="font-weight:800;font-size:16px;">
+          ${nome ? "Olá, " + escapeHtml(nome) + " ✅" : "Consulta concluída ✅"}
+        </div>
+
+        <div class="grid">
+          <div class="item">
+            <div class="k">Estado</div>
+            <div class="v">${escapeHtml(String(estado))}</div>
+          </div>
+          <div class="item">
+            <div class="k">Saldo / Dívida</div>
+            <div class="v">${escapeHtml(String(saldo))}</div>
+          </div>
+          <div class="item" style="grid-column: 1 / -1;">
+            <div class="k">Próxima data</div>
+            <div class="v">${escapeHtml(String(prox))}</div>
+          </div>
+        </div>
+
+        <div class="hint" style="margin-top:10px;">
+          Se achares que há erro, fala com a administração.
+        </div>
+      `;
+    }
+
+    async function consultar() {
+      const raw = elCode.value || "";
+      const codigo = raw.trim().toUpperCase();
+
+      if (!codigo) {
+        showError("Digite o seu código.");
+        return;
+      }
+
+      if (SCRIPT_URL.includes("COLOCA_AQUI")) {
+        showError("Ainda falta colar o link do Apps Script no código (SCRIPT_URL).");
+        return;
+      }
+
+      showLoading();
+
+      try {
+        // Usa encodeURIComponent para evitar problemas com espaços/caracteres especiais
+        const url = `${SCRIPT_URL}?codigo=${encodeURIComponent(codigo)}`;
+        const res = await fetch(url, { method: "GET" });
+
+        if (!res.ok) {
+          showError("Servidor indisponível. Tenta novamente em alguns segundos.");
+          return;
+        }
+
+        const data = await res.json();
+
+        if (data.erro) {
+          showError(data.erro);
+          return;
+        }
+
+        showData(data);
+      } catch (err) {
+        showError("Falha de conexão. Verifica a internet e tenta novamente.");
+      }
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/[&<>"']/g, (m) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }[m]));
+    }
+  </script>
+</body>
+</html>
