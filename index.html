@@ -3,337 +3,131 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Consultar Estado</title>
-
+  <title>Consulta de Conta</title>
   <style>
-    :root{
-      --bg: #0b1220;
-      --card: #121a2b;
-      --muted: #9aa4b2;
-      --text: #e6eaf0;
-      --line: rgba(255,255,255,.08);
-      --shadow: 0 16px 40px rgba(0,0,0,.35);
-      --radius: 18px;
-    }
-
-    *{ box-sizing: border-box; }
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1000px 600px at 10% 10%, rgba(90,130,255,.18), transparent 60%),
-                  radial-gradient(900px 600px at 90% 20%, rgba(124,255,199,.12), transparent 60%),
-                  var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 20px;
-    }
-
-    .wrap{
-      width: 100%;
-      max-width: 520px;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-    .logo{
-      width: 44px; height: 44px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, rgba(90,130,255,.9), rgba(124,255,199,.85));
-      box-shadow: 0 8px 20px rgba(0,0,0,.25);
-    }
-    .brand h1{
-      font-size: 18px;
-      margin:0;
-      letter-spacing: .2px;
-    }
-    .brand p{
-      margin: 2px 0 0;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .card{
-      background: rgba(18,26,43,.82);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      border-radius: var(--radius);
-      padding: 18px;
-      backdrop-filter: blur(10px);
-    }
-
-    .field{
-      margin-top: 10px;
-    }
-    label{
-      display:block;
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-    .row{
-      display:flex;
-      gap: 10px;
-      align-items: stretch;
-      flex-wrap: wrap;
-    }
-    input{
-      flex: 1;
-      min-width: 220px;
-      padding: 14px 14px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      color: var(--text);
-      outline: none;
-      font-size: 15px;
-      letter-spacing: .6px;
-      text-transform: uppercase;
-    }
-    input:focus{
-      border-color: rgba(90,130,255,.55);
-      box-shadow: 0 0 0 3px rgba(90,130,255,.18);
-    }
-
-    button{
-      padding: 14px 16px;
-      border: 0;
-      border-radius: 14px;
-      background: linear-gradient(135deg, rgba(90,130,255,.95), rgba(124,255,199,.9));
-      color: #07101a;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 15px;
-      min-width: 140px;
-    }
-    button:disabled{
-      opacity: .6;
-      cursor:not-allowed;
-    }
-
-    .hint{
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.45;
-    }
-
-    .result{
-      margin-top: 14px;
-      padding: 14px;
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: rgba(0,0,0,.18);
-      display:none;
-    }
-
-    .alert{
-      display:flex;
-      align-items:flex-start;
-      gap: 10px;
-      color: #ffd3d3;
-    }
-    .ok{
-      color: #d6ffe8;
-    }
-
-    .grid{
-      margin-top: 10px;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .item{
-      padding: 12px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: rgba(255,255,255,.03);
-    }
-    .k{
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-    .v{
-      font-size: 16px;
-      font-weight: 700;
-      word-break: break-word;
-    }
-
-    .footer{
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: 12px;
-      text-align:center;
-    }
-
-    .pill{
-      display:inline-block;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 8px;
-    }
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; background:#0b1220; color:#e8eefc; margin:0; padding:24px;}
+    .wrap{max-width:720px; margin:0 auto;}
+    .card{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:18px; padding:18px; box-shadow:0 10px 30px rgba(0,0,0,.25);}
+    .title{font-size:28px; font-weight:700; margin:0 0 6px;}
+    .sub{opacity:.85; margin:0 0 18px;}
+    label{display:block; font-size:13px; opacity:.9; margin:10px 0 6px;}
+    input{width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.06); color:#fff; outline:none;}
+    button{margin-top:12px; width:100%; padding:12px 14px; border-radius:12px; border:0; font-weight:700; cursor:pointer; background:#4f7cff; color:white;}
+    button:disabled{opacity:.6; cursor:not-allowed;}
+    .result{margin-top:16px; display:none;}
+    .grid{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px;}
+    .pill{padding:12px 14px; border-radius:14px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);}
+    .k{font-size:12px; opacity:.8;}
+    .v{font-size:18px; font-weight:700; margin-top:4px;}
+    .err{margin-top:12px; color:#ffb4b4; display:none;}
+    .ok{margin-top:12px; color:#b9ffcf; display:none;}
+    .footer{opacity:.7; font-size:12px; margin-top:18px;}
+    @media (max-width:560px){ .grid{grid-template-columns:1fr;} }
   </style>
 </head>
-
 <body>
   <div class="wrap">
-    <div class="brand">
-      <div class="logo" aria-hidden="true"></div>
-      <div>
-        <h1>Consultar Estado</h1>
-        <p>Digite o seu código para ver o seu saldo/estado.</p>
-      </div>
-    </div>
-
     <div class="card">
-      <div class="field">
-        <label for="codigo">Código do cliente</label>
-        <div class="row">
-          <input id="codigo" inputmode="latin" autocomplete="one-time-code"
-                 placeholder="Ex.: MZ8K2P9A" maxlength="24" />
-          <button id="btn" onclick="consultar()">Consultar</button>
-        </div>
-        <div class="hint">
-          * Este acesso é restrito. Se não tiveres código, fala com a administração.
-          <div class="pill">Dica: podes adicionar esta página à tela inicial (vira “app”).</div>
+      <h1 class="title">Consultar Situação</h1>
+      <p class="sub">Insira o seu código para ver Nome, Valor em Dívida e Saldo.</p>
+
+      <label for="codigo">Código</label>
+      <input id="codigo" placeholder="Ex: 1234" autocomplete="off" />
+
+      <button id="btn">Consultar</button>
+
+      <div class="err" id="err"></div>
+      <div class="ok" id="ok"></div>
+
+      <div class="result" id="result">
+        <div class="grid">
+          <div class="pill">
+            <div class="k">Nome</div>
+            <div class="v" id="nome">—</div>
+          </div>
+          <div class="pill">
+            <div class="k">Código</div>
+            <div class="v" id="codOut">—</div>
+          </div>
+          <div class="pill">
+            <div class="k">Valor em Dívida</div>
+            <div class="v" id="divida">—</div>
+          </div>
+          <div class="pill">
+            <div class="k">Saldo</div>
+            <div class="v" id="saldo">—</div>
+          </div>
         </div>
       </div>
 
-      <div id="result" class="result"></div>
+      <div class="footer">Se não encontrar, confirma se digitou o código corretamente.</div>
     </div>
-
-    <div class="footer">© Consulta de estado</div>
   </div>
 
-  <script>
-    // 1) Cola aqui o link do teu Apps Script Web App (o que termina com /exec)
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwA7KJP7gQ0mkvRB_5bOtnaQkH_PlXxCVPsi4G1QPMfBEUM2K-srdVmhfmTWfASquMn/exec";
+<script>
+  const API_URL = "https://script.google.com/macros/s/AKfycbzVEPCUmnzLA5a0Zdpzh2aZ7_37_RRILfZ1Jpsb0KcCmCtFEp2NoYa6Vf25POHlNiaw/exec";
+  const TOKEN   = "Ascas_2026@x9#Kp!19"; // se você ativar o token
 
-    const elCode = document.getElementById("codigo");
-    const elBtn  = document.getElementById("btn");
-    const elRes  = document.getElementById("result");
+  const $ = (id) => document.getElementById(id);
+  const btn = $("btn");
 
-    // Enter para consultar
-    elCode.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") consultar();
-    });
+  function money(x){
+    if (x === null || x === undefined || x === "") return "—";
+    const n = Number(String(x).replace(",", "."));
+    if (!Number.isFinite(n)) return String(x);
+    return n.toLocaleString("pt-PT", { style:"currency", currency:"MZN" });
+  }
 
-    function showLoading() {
-      elBtn.disabled = true;
-      elBtn.textContent = "A consultar…";
-      elRes.style.display = "block";
-      elRes.innerHTML = `<div class="hint">Aguarda um instante…</div>`;
+  async function consultar(){
+    $("err").style.display = "none";
+    $("ok").style.display = "none";
+    $("result").style.display = "none";
+
+    const codigo = $("codigo").value.trim();
+    if (!codigo) {
+      $("err").textContent = "Digite o código.";
+      $("err").style.display = "block";
+      return;
     }
 
-    function showError(msg) {
-      elBtn.disabled = false;
-      elBtn.textContent = "Consultar";
-      elRes.style.display = "block";
-      elRes.innerHTML = `
-        <div class="alert">
-          <div>⚠️</div>
-          <div>
-            <div style="font-weight:700;margin-bottom:4px;">Não foi possível consultar</div>
-            <div class="hint">${escapeHtml(msg)}</div>
-          </div>
-        </div>`;
-    }
+    btn.disabled = true;
+    btn.textContent = "Consultando...";
 
-    function showData(data) {
-      elBtn.disabled = false;
-      elBtn.textContent = "Consultar";
+    try {
+      const url = new URL(API_URL);
+      url.searchParams.set("codigo", codigo);
+      if (TOKEN) url.searchParams.set("token", TOKEN);
 
-      const estado = data.estado ?? "-";
-      const saldo  = data.saldo ?? "-";
-      const prox   = data.proxima_data ?? "-";
-      const nome   = data.nome ?? "";
+      const res = await fetch(url.toString());
+      const data = await res.json();
 
-      elRes.style.display = "block";
-      elRes.innerHTML = `
-        <div class="ok" style="font-weight:800;font-size:16px;">
-          ${nome ? "Olá, " + escapeHtml(nome) + " ✅" : "Consulta concluída ✅"}
-        </div>
-
-        <div class="grid">
-          <div class="item">
-            <div class="k">Estado</div>
-            <div class="v">${escapeHtml(String(estado))}</div>
-          </div>
-          <div class="item">
-            <div class="k">Saldo / Dívida</div>
-            <div class="v">${escapeHtml(String(saldo))}</div>
-          </div>
-          <div class="item" style="grid-column: 1 / -1;">
-            <div class="k">Próxima data</div>
-            <div class="v">${escapeHtml(String(prox))}</div>
-          </div>
-        </div>
-
-        <div class="hint" style="margin-top:10px;">
-          Se achares que há erro, fala com a administração.
-        </div>
-      `;
-    }
-
-    async function consultar() {
-      const raw = elCode.value || "";
-      const codigo = raw.trim().toUpperCase();
-
-      if (!codigo) {
-        showError("Digite o seu código.");
+      if (!data.ok) {
+        $("err").textContent = data.error || "Não foi possível consultar.";
+        $("err").style.display = "block";
         return;
       }
 
-      if (SCRIPT_URL.includes("COLOCA_AQUI")) {
-        showError("Ainda falta colar o link do Apps Script no código (SCRIPT_URL).");
-        return;
-      }
+      const d = data.data;
+      $("nome").textContent = d.nome || "—";
+      $("codOut").textContent = d.codigo || "—";
+      $("divida").textContent = money(d.valorEmDivida);
+      $("saldo").textContent = money(d.saldo);
 
-      showLoading();
+      $("result").style.display = "block";
+      $("ok").textContent = "Consulta realizada com sucesso.";
+      $("ok").style.display = "block";
 
-      try {
-        // Usa encodeURIComponent para evitar problemas com espaços/caracteres especiais
-        const url = `${SCRIPT_URL}?codigo=${encodeURIComponent(codigo)}`;
-        const res = await fetch(url, { method: "GET" });
-
-        if (!res.ok) {
-          showError("Servidor indisponível. Tenta novamente em alguns segundos.");
-          return;
-        }
-
-        const data = await res.json();
-
-        if (data.erro) {
-          showError(data.erro);
-          return;
-        }
-
-        showData(data);
-      } catch (err) {
-        showError("Falha de conexão. Verifica a internet e tenta novamente.");
-      }
+    } catch (e) {
+      $("err").textContent = "Erro ao conectar. Tente novamente.";
+      $("err").style.display = "block";
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Consultar";
     }
+  }
 
-    function escapeHtml(str) {
-      return str.replace(/[&<>"']/g, (m) => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-      }[m]));
-    }
-  </script>
+  btn.addEventListener("click", consultar);
+  $("codigo").addEventListener("keydown", (e)=>{ if (e.key === "Enter") consultar(); });
+</script>
 </body>
 </html>
